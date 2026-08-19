@@ -685,8 +685,10 @@ namespace CustomKnight
 
             LoadSwapByPath(DATA_DIR); // over write global strings with local strings 
 
-            // only need to do this once local strings are loaded
-            UpdateTextMeshGameTexts();
+            if (Strings.Count > 0 || ReplaceStrings.Count > 0)
+            {
+                UpdateTextMeshGameTexts();
+            }
 
             if (Directory.GetDirectories(DATA_DIR).Length == 0)
             {
@@ -745,6 +747,17 @@ namespace CustomKnight
                 {
                     tmpro.UpdateText();
                 }
+            }
+            foreach (var fontChanger in Resources.FindObjectsOfTypeAll<ChangeFontByLanguage>())
+            {
+                if (fontChanger != null && fontChanger.defaultMaterial != null)
+                {
+                    fontChanger.SetFont();
+                }
+            }
+            foreach (var activator in Resources.FindObjectsOfTypeAll<ActivatePerLanguage>())
+            {
+                activator?.UpdateLanguage();
             }
         }
         internal GameObjectProxy getGop(string sceneName, GameObject go, bool useBaseName = false)

@@ -50,7 +50,7 @@ namespace CustomKnight.NewUI
                 text.alignment = TextAnchor.MiddleCenter;
                 text.fontSize = 15;
                 text.color = Color.white;
-                text.font = UIController.trajanBold ?? UIController.arial;
+                text.font = UIController.MenuFont;
                 buttonTransform.sizeDelta = new Vector2(500f, 35f);
             }
 

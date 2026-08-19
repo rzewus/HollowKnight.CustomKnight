@@ -30,7 +30,7 @@ namespace CustomKnight.NewUI
             text.alignment = TextAnchor.MiddleCenter;
             text.fontSize = 10;
             text.color = Color.white;
-            text.font = UIController.trajanBold ?? UIController.arial;
+            text.font = UIController.MenuFont;
             textTransform.anchorMin = new Vector2(0f, 0f);
             textTransform.anchorMax = new Vector2(1f, 1f);
 
