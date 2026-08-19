@@ -29,4 +29,3 @@ Custom Knight is a Hollow Knight mod to load custom texture sheets for the playe
 - Add support for arbitrary swap files
 
 Additional Custom Knight Documentation is available [here](https://prashantmohta.github.io/HollowKnight.CustomKnight/)
-
