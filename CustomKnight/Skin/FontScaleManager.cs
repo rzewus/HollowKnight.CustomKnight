@@ -25,7 +25,6 @@ namespace CustomKnight
             On.SetTextMeshProGameText.Awake += OnAwake;
             On.SetTextMeshProGameText.UpdateText += OnUpdateText;
             On.ChangeFontByLanguage.SetFont += OnChangeFontByLanguageSetFont;
-            ModHooks.SetFontHook += OnSetFontHook;
         }
 
         internal static void Unhook()
@@ -38,7 +37,6 @@ namespace CustomKnight
             On.SetTextMeshProGameText.Awake -= OnAwake;
             On.SetTextMeshProGameText.UpdateText -= OnUpdateText;
             On.ChangeFontByLanguage.SetFont -= OnChangeFontByLanguageSetFont;
-            ModHooks.SetFontHook -= OnSetFontHook;
             tracked.Clear();
             baseFontSizes.Clear();
         }
@@ -83,12 +81,6 @@ namespace CustomKnight
         private static void OnChangeFontByLanguageSetFont(On.ChangeFontByLanguage.orig_SetFont orig, ChangeFontByLanguage self)
         {
             orig(self);
-            baseFontSizes.Clear();
-            RefreshAll();
-        }
-
-        private static void OnSetFontHook()
-        {
             baseFontSizes.Clear();
             RefreshAll();
         }
