@@ -750,14 +750,11 @@ namespace CustomKnight
             }
             foreach (var fontChanger in Resources.FindObjectsOfTypeAll<ChangeFontByLanguage>())
             {
-                if (fontChanger != null && fontChanger.defaultMaterial != null)
-                {
-                    fontChanger.SetFont();
-                }
+                fontChanger?.SetFont();
             }
-            foreach (var activator in Resources.FindObjectsOfTypeAll<ActivatePerLanguage>())
+            foreach (var changer in Resources.FindObjectsOfTypeAll<ChangeByLanguageBase>())
             {
-                activator?.UpdateLanguage();
+                changer?.DoUpdate();
             }
         }
         internal GameObjectProxy getGop(string sceneName, GameObject go, bool useBaseName = false)
