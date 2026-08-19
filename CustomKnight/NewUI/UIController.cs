@@ -12,27 +12,35 @@ namespace CustomKnight.NewUI
         internal static Font trajanBold;
         internal static Font trajanNormal;
         private static float lastScrollPosition;
+        private static bool resourcesLoaded;
 
         private static void LoadResources()
         {
+            if (resourcesLoaded)
+            {
+                return;
+            }
             foreach (Font font in Resources.FindObjectsOfTypeAll<Font>())
             {
-                if (font != null && font.name == "TrajanPro-Bold")
+                if (font == null)
+                {
+                    continue;
+                }
+                if (font.name == "TrajanPro-Bold")
                 {
                     trajanBold = font;
                 }
-
-                if (font != null && font.name == "TrajanPro-Regular")
+                else if (font.name == "TrajanPro-Regular")
                 {
                     trajanNormal = font;
                 }
-
-                //Just in case for some reason the computer doesn't have arial
-                if (font != null && font.name == "Perpetua")
+                else if (font.name == "Perpetua")
                 {
                     perpetua = font;
                 }
-
+            }
+            if (trajanBold == null && trajanNormal == null)
+            {
                 foreach (string fontName in Font.GetOSInstalledFontNames())
                 {
                     if (fontName.ToLower().Contains("arial"))
@@ -42,12 +50,10 @@ namespace CustomKnight.NewUI
                     }
                 }
             }
+            resourcesLoaded = true;
+        }
 
-        }
-        static UIController()
-        {
-            LoadResources();
-        }
+        internal static Font MenuFont => trajanBold ?? trajanNormal ?? arial;
         private static void OnSceneChange(Scene prevScene, Scene nextScene)
         {
             if (nextScene.name == "Menu_Title")
@@ -87,6 +93,7 @@ namespace CustomKnight.NewUI
         }
         public static void GenerateMenu()
         {
+            LoadResources();
             UI = new GameObject("UI Parent");
             var cv = UI.AddComponent<UnityEngine.Canvas>();
             cv.renderMode = RenderMode.ScreenSpaceOverlay;
