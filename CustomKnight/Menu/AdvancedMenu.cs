@@ -73,8 +73,15 @@ namespace CustomKnight
                     },
                     () =>
                     {
-                        var idx = System.Array.IndexOf(FontScales, CustomKnight.GlobalSettings.InGameFontScale);
-                        return idx >= 0 ? idx : 0;
+                        var s = CustomKnight.GlobalSettings.InGameFontScale;
+                        for (var i = 0; i < FontScales.Length; i++)
+                        {
+                            if (System.Math.Abs(FontScales[i] - s) < 0.001f)
+                            {
+                                return i;
+                            }
+                        }
+                        return 0;
                     },
                     Id: "InGameFontScale"),
                 new MenuRow(
