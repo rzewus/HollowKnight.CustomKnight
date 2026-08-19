@@ -106,6 +106,7 @@ namespace CustomKnight
                 CustomKnight.GlobalSettings = s;
                 CustomKnight.GlobalSettings.Version = GetVersion();
                 CustomKnight.GlobalSettings.NameLength = DefaultSettings.NameLength;
+                CustomKnight.GlobalSettings.InGameFontScale = DefaultSettings.InGameFontScale;
             }
         }
         /// <summary>
@@ -197,6 +198,7 @@ namespace CustomKnight
             PreloadedTk2dSpritesHandler.Unhook();
             PreloadedTk2dSpritesHandler.Enable();
             SaveHud.Hook();
+            FontScaleManager.Hook();
             OnInit?.Invoke(this, null);
 
             if (!isSatchelInstalled())
@@ -298,6 +300,7 @@ namespace CustomKnight
         public void Unload()
         {
             SaveHud.UnHook();
+            FontScaleManager.Unhook();
             SkinManager.Unload();
             OnUnload?.Invoke(this, null);
             On.HeroController.Start -= HeroControllerStart;
