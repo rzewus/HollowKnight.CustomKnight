@@ -94,6 +94,11 @@ namespace CustomKnight
         public List<string> RecentSkins { get; set; } = new();
 
         /// <summary>
+        /// Scale multiplier for in-game TMP text (1.0 = vanilla).
+        /// </summary>
+        public float InGameFontScale { get; set; } = 1.0f;
+
+        /// <summary>
         /// Saves the keybinds
         /// </summary>
         [JsonConverter(typeof(PlayerActionSetConverter))]

@@ -5,6 +5,9 @@ namespace CustomKnight
 {
     internal class AdvancedMenu
     {
+        private static readonly float[] FontScales = { 1.0f, 0.95f, 0.90f, 0.85f, 0.80f };
+        private static readonly string[] FontScaleLabels = { "100%", "95%", "90%", "85%", "80%" };
+
         private static Menu MenuRef;
         private static MenuScreen MenuScreenRef;
         internal static MenuScreen GetMenu(MenuScreen lastMenu)
@@ -59,6 +62,21 @@ namespace CustomKnight
                         }
                     },
                     () => CustomKnight.GlobalSettings.EnablePauseMenu),
+                new HorizontalOption(
+                    "In-Game Font Size",
+                    "Scale in-game text only (inventory, dialogues). Does not affect mod menus.",
+                    FontScaleLabels,
+                    (setting) =>
+                    {
+                        CustomKnight.GlobalSettings.InGameFontScale = FontScales[setting];
+                        FontScaleManager.RefreshAll();
+                    },
+                    () =>
+                    {
+                        var idx = System.Array.IndexOf(FontScales, CustomKnight.GlobalSettings.InGameFontScale);
+                        return idx >= 0 ? idx : 0;
+                    },
+                    Id: "InGameFontScale"),
                 new MenuRow(
                     new List<Element>{
                         new MenuButton("Make Default","Creates the default skin on next restart",(_)=>RegenerateDefaultSkin()),
