@@ -1,5 +1,6 @@
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using CustomKnight.Skin.Swapper;
 using static Satchel.IoUtils;
@@ -739,6 +740,23 @@ namespace CustomKnight
             orig(self);
             setTextMeshProGameTexts.Add(self);
         }
+        private static void InvokeParameterless(MonoBehaviour target, params string[] methodNames)
+        {
+            if (target == null)
+            {
+                return;
+            }
+            var type = target.GetType();
+            foreach (var name in methodNames)
+            {
+                var method = type.GetMethod(name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, Type.EmptyTypes, null);
+                if (method != null)
+                {
+                    method.Invoke(target, null);
+                    return;
+                }
+            }
+        }
         private void UpdateTextMeshGameTexts()
         {
             foreach (var tmpro in setTextMeshProGameTexts)
@@ -752,9 +770,9 @@ namespace CustomKnight
             {
                 fontChanger?.SetFont();
             }
-            foreach (var changer in Resources.FindObjectsOfTypeAll<ChangeByLanguageBase>())
+            foreach (var activator in Resources.FindObjectsOfTypeAll<ActivatePerLanguage>())
             {
-                changer?.DoUpdate();
+                InvokeParameterless(activator, "UpdateLanguage", "DoUpdate", "Update");
             }
         }
         internal GameObjectProxy getGop(string sceneName, GameObject go, bool useBaseName = false)
